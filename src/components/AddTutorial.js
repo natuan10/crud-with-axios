@@ -1,7 +1,7 @@
-import { useState } from "react";
-import TutorialService from "../services/TutorialService";
+import React, { useState } from "react";
+import TutorialDataService from "../services/TutorialService";
 
-function AddTutorial() {
+const AddTutorial = () => {
 	const initialTutorialState = {
 		id: null,
 		title: "",
@@ -11,9 +11,8 @@ function AddTutorial() {
 	const [tutorial, setTutorial] = useState(initialTutorialState);
 	const [submitted, setSubmitted] = useState(false);
 
-	const handleInputChange = (e) => {
-		console.log(e);
-		const { name, value } = e.target;
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
 		setTutorial({ ...tutorial, [name]: value });
 	};
 
@@ -23,7 +22,7 @@ function AddTutorial() {
 			description: tutorial.description,
 		};
 
-		TutorialService.create(data)
+		TutorialDataService.create(data)
 			.then((response) => {
 				setTutorial({
 					id: response.data.id,
@@ -32,46 +31,62 @@ function AddTutorial() {
 					published: response.data.published,
 				});
 				setSubmitted(true);
-				console.log(response);
+				console.log(response.data);
 			})
-			.catch((error) => {
-				console.log(error);
+			.catch((e) => {
+				console.log(e);
 			});
 	};
-	return (
-		<div>
-			<form>
-				<div className="mb-3">
-					<label className="form-label">Title</label>
-					<input
-						required
-						type="text"
-						className="form-control"
-						id="title"
-						value={tutorial.title}
-						onChange={handleInputChange}
-						name="title"
-					/>
-				</div>
-				<div className="mb-3">
-					<label className="form-label">Description</label>
-					<input
-						type="text"
-						className="form-control"
-						id="description"
-						required
-						value={tutorial.description}
-						onChange={handleInputChange}
-						name="description"
-					/>
-				</div>
 
-				<button onClick={saveTutorial} className="btn btn-primary">
-					Submit
-				</button>
-			</form>
+	const newTutorial = () => {
+		setTutorial(initialTutorialState);
+		setSubmitted(false);
+	};
+
+	return (
+		<div className="submit-form">
+			{submitted ? (
+				<div>
+					<h4>You submitted successfully!</h4>
+					<button className="btn btn-success" onClick={newTutorial}>
+						Add
+					</button>
+				</div>
+			) : (
+				<div>
+					<div className="form-group">
+						<label htmlFor="title">Title</label>
+						<input
+							type="text"
+							className="form-control"
+							id="title"
+							required
+							value={tutorial.title}
+							onChange={handleInputChange}
+							name="title"
+						/>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="description">Description</label>
+						<input
+							type="text"
+							className="form-control"
+							id="description"
+							required
+							value={tutorial.description}
+							onChange={handleInputChange}
+							name="description"
+						/>
+					</div>
+
+					<button onClick={saveTutorial} className="btn btn-success">
+						Submit
+					</button>
+				</div>
+			)}
 		</div>
 	);
-}
+};
 
 export default AddTutorial;

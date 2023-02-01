@@ -1,41 +1,41 @@
 import httpCommon from "../http-common";
 
 const getAll = () => {
-    return httpCommon.getAll("/tutorials");
-}
+	return httpCommon.get("/fakeData");
+};
 
-const get = id => {
-    return httpCommon.get(`/tutorials/${id}`);
-}
+const get = (id) => {
+	return httpCommon.get(`/fakeData/${id}`);
+};
 
-const create = data => {
-    return httpCommon.post("/tutorials", data);
-}
+const create = (data) => {
+	return httpCommon.post("/fakeData", data);
+};
 
-const update = (id , data ) => { 
-    return httpCommon.put(`/tutorials/${id}`, data);
-}
+const update = (id, data) => {
+	return httpCommon.put(`/fakeData/${id}`, data);
+};
 
-const remove = id => {
-    return httpCommon.delete(`/tutorials/${id}`);
-}
+const remove = (id) => {
+	return httpCommon.delete(`/fakeData/${id}`);
+};
 
 const removeAll = () => {
-    return httpCommon.delete(`/tutorials`);
-}
+	return httpCommon.delete(`/fakeData`);
+};
 
-const findByTitle = (title) => { 
-    return httpCommon.get(`/tutorials?title=${title}`);
-}
+const findByTitle = (title) => {
+	return httpCommon.get(`/fakeData?title=${title}`);
+};
 
 const TutorialService = {
-    getAll,
-    get,
-    create,
-    update,
-    remove,
-    removeAll,
-    findByTitle
-}
+	getAll,
+	get,
+	create,
+	update,
+	remove,
+	removeAll,
+	findByTitle,
+};
 
 export default TutorialService;
