@@ -13,6 +13,7 @@ const AddTutorial = () => {
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
+		console.log(name, value);
 		setTutorial({ ...tutorial, [name]: value });
 	};
 
@@ -55,11 +56,10 @@ const AddTutorial = () => {
 			) : (
 				<div>
 					<div className="form-group">
-						<label htmlFor="title">Title</label>
+						<label>Title</label>
 						<input
 							type="text"
 							className="form-control"
-							id="title"
 							required
 							value={tutorial.title}
 							onChange={handleInputChange}
@@ -68,11 +68,10 @@ const AddTutorial = () => {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="description">Description</label>
+						<label>Description</label>
 						<input
 							type="text"
 							className="form-control"
-							id="description"
 							required
 							value={tutorial.description}
 							onChange={handleInputChange}

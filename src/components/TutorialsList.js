@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TutorialService from "../services/TutorialService";
 
 function TutorialsList() {
 	const [tutorials, setTutorials] = useState([]);
 	const [currentTutorial, setCurrentTutorial] = useState(null);
+	const [currentIndex, setCurrentIndex] = useState(-1);
 
 	useEffect(() => {
 		retrieveTutorials();
-	});
+	}, []);
 
 	const retrieveTutorials = () => {
 		TutorialService.getAll()
@@ -18,6 +20,12 @@ function TutorialsList() {
 				console.log(error);
 			});
 	};
+
+	const setActiveTutorial = (tutorial, index) => {
+		setCurrentTutorial(tutorial);
+		setCurrentIndex(index);
+	};
+
 	return (
 		<div className="list row">
 			<div className="col-md-8">
@@ -35,34 +43,57 @@ function TutorialsList() {
 			<div className="col-md-6">
 				<h4>List group</h4>
 				<ul className="list-group">
-					<li className="list-group-item active" aria-current="true">
-						An active item
-					</li>
-					<li className="list-group-item">A second item</li>
-					<li className="list-group-item">A third item</li>
-					<li className="list-group-item">A fourth item</li>
-					<li className="list-group-item">And a fifth one</li>
+					{tutorials &&
+						tutorials.map((tutorial, index) => (
+							<li
+								className={
+									"list-group-item " +
+									(index === currentIndex ? "active" : "")
+								}
+								onClick={() =>
+									setActiveTutorial(tutorial, index)
+								}
+								key={index}
+							>
+								{tutorial.title}
+							</li>
+						))}
 				</ul>
 			</div>
 			<div className="col-md-6">
-				<div>
-					<h4>Tutorial</h4>
+				{currentTutorial ? (
 					<div>
-						<label>
-							<strong>Title:</strong>
-						</label>
+						<h4>Tutorial</h4>
+						<div>
+							<label>
+								<strong>Title:</strong>
+							</label>
+							{currentTutorial.title}
+						</div>
+						<div>
+							<label>
+								<strong>Description:</strong>
+							</label>
+							{currentTutorial.description}
+						</div>
+						<div>
+							<label>
+								<strong>Status:</strong>
+							</label>
+							{currentTutorial.published
+								? "Published"
+								: "Pending"}
+						</div>
+
+						<Link to={"/tutorials/" + currentTutorial.id}>
+							Edit
+						</Link>
 					</div>
+				) : (
 					<div>
-						<label>
-							<strong>Description:</strong>
-						</label>
+						<p>Please choose a tutorial</p>
 					</div>
-					<div>
-						<label>
-							<strong>Status:</strong>
-						</label>
-					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);
