@@ -4,6 +4,10 @@ const getAll = () => {
 	return httpCommon.get("/tutorials");
 };
 
+const login = () => {
+	return httpCommon.post("/user/login");
+};
+
 const get = (id) => {
 	return httpCommon.get(`/tutorials/${id}`);
 };
@@ -29,6 +33,7 @@ const findByTitle = (title) => {
 };
 
 const TutorialService = {
+	login,
 	getAll,
 	get,
 	create,

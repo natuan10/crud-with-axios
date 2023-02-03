@@ -5,6 +5,7 @@ import TutorialsList from "./components/TutorialsList";
 import AddTutorial from "./components/AddTutorial";
 import Tutorial from "./components/Tutorial";
 import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 function App() {
 	return (
@@ -29,8 +30,9 @@ function App() {
 
 			<div className="container mt-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             3">
 				<Routes>
-					<Route path="/" element={<Login />} />
+					<Route path="/login" element={<Login />} />
 					<Route path="/tutorials" element={<TutorialsList />} />
+					<Route path="/sign-up" element={<SignUp />} />
 					<Route path="/add" element={<AddTutorial />} />
 					<Route path="/tutorials/:id" element={<Tutorial />} />
 				</Routes>
