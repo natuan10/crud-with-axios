@@ -10,7 +10,7 @@ import SignUp from "./components/SignUp";
 function App() {
 	return (
 		<div>
-			<nav className="navbar navbar-expand navbar-dark bg-dark">
+			{/* <nav className="navbar navbar-expand navbar-dark bg-dark">
 				<a href="/tutorials" className="navbar-brand">
 					CRUD
 				</a>
@@ -26,17 +26,15 @@ function App() {
 						</Link>
 					</li>
 				</div>
-			</nav>
+			</nav> */}
 
-			<div className="container mt-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             3">
-				<Routes>
-					<Route path="/login" element={<Login />} />
-					<Route path="/tutorials" element={<TutorialsList />} />
-					<Route path="/sign-up" element={<SignUp />} />
-					<Route path="/add" element={<AddTutorial />} />
-					<Route path="/tutorials/:id" element={<Tutorial />} />
-				</Routes>
-			</div>
+			<Routes>
+				<Route path="/login" element={<Login />} />
+				<Route path="/tutorials" element={<TutorialsList />} />
+				<Route path="/sign-up" element={<SignUp />} />
+				<Route path="/add" element={<AddTutorial />} />
+				<Route path="/tutorials/:id" element={<Tutorial />} />
+			</Routes>
 		</div>
 	);
 }

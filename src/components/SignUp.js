@@ -1,6 +1,49 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
+
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const PWD_REGEX =
+	/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,24})$/;
 function SignUp() {
+	// const userRef = userRef();
+	// const errRef = userRef();
+
+	const [user, setUser] = useState("");
+	const [validName, setValidName] = useState(false);
+	const [userFocus, setUserFocus] = useState(false);
+
+	const [password, setPassword] = useState("");
+	const [validPassword, setValidPassword] = useState(false);
+	const [passwordFocus, setPasswordFocus] = useState(false);
+
+	const [matchPwd, setMatchPwd] = useState("");
+	const [validMatch, setValidMatch] = useState(false);
+	const [matchFocus, setMatchFocus] = useState(false);
+
+	const [errMsg, setErrMsg] = useState(false);
+	const [success, setSuccess] = useState(false);
+
+	useEffect(() => {
+		const result = USER_REGEX.test(user);
+		console.log(result);
+		console.log(user);
+		setValidName(result);
+	}, [user]);
+
+	useEffect(() => {
+		const result = PWD_REGEX.test(password);
+		console.log(result);
+		console.log(user);
+		setValidPassword(result);
+		const match = password === matchPwd;
+		setValidMatch(match);
+	}, [password, matchPwd]);
+
+	useEffect(() => {
+		setErrMsg("");
+	}, [user, password, matchPwd]);
+
 	return (
 		<section
 			className="vh-100 bg-image"
@@ -24,59 +67,103 @@ function SignUp() {
 
 									<form>
 										<div className="form-outline mb-4">
+											<label
+												className="form-label"
+												htmlFor="username"
+											>
+												Username
+											</label>
 											<input
 												type="text"
-												id="form3Example1cg"
+												id="username"
+												autoComplete="off"
+												onChange={(e) =>
+													setUser(e.target.value)
+												}
+												aria-invalid={
+													validName ? "false" : "true"
+												}
+												aria-describedby="uidnote"
+												onFocus={() =>
+													setUserFocus(true)
+												}
+												onBlur={() =>
+													setUserFocus(false)
+												}
+												required
 												className="form-control form-control-lg"
 											/>
-											<label
-												className="form-label"
-												for="form3Example1cg"
+											<p
+												id="uidnote"
+												className={
+													userFocus && !validName
+														? "instructions"
+														: "offscreen"
+												}
 											>
-												Your Name
-											</label>
+												4 to 24 characters. <br />
+												Must begin with a letter. <br />
+												Letters, numbers, underscores,
+												hyphens allowed
+											</p>
 										</div>
-
 										<div className="form-outline mb-4">
-											<input
-												type="email"
-												id="form3Example3cg"
-												className="form-control form-control-lg"
-											/>
 											<label
 												className="form-label"
-												for="form3Example3cg"
-											>
-												Your Email
-											</label>
-										</div>
-
-										<div className="form-outline mb-4">
-											<input
-												type="password"
-												id="form3Example4cg"
-												className="form-control form-control-lg"
-											/>
-											<label
-												className="form-label"
-												for="form3Example4cg"
+												htmlFor="password"
 											>
 												Password
 											</label>
+											<input
+												type="password"
+												id="password"
+												autoComplete="off"
+												onChange={(e) =>
+													setPassword(e.target.value)
+												}
+												required
+												aria-invalid={
+													validPassword
+														? "false"
+														: "true"
+												}
+												aria-describedby="uidpwd"
+												onFocus={() =>
+													setPasswordFocus(true)
+												}
+												onBlur={() =>
+													setPasswordFocus(false)
+												}
+												className="form-control form-control-lg"
+											/>
+											<p
+												id="uidpwd"
+												className={
+													passwordFocus &&
+													!validPassword
+														? "instructions"
+														: "offscreen"
+												}
+											>
+												4 to 24 characters. <br />
+												Must begin with a letter. <br />
+												Letters, numbers, underscores,
+												hyphens allowed
+											</p>
 										</div>
 
 										<div className="form-outline mb-4">
+											<label
+												className="form-label"
+												htmlFor="rePassword"
+											>
+												Confirm password
+											</label>
 											<input
 												type="password"
 												id="form3Example4cdg"
 												className="form-control form-control-lg"
 											/>
-											<label
-												className="form-label"
-												for="form3Example4cdg"
-											>
-												Repeat your password
-											</label>
 										</div>
 
 										<div className="form-check d-flex justify-content-center mb-5">
@@ -88,7 +175,7 @@ function SignUp() {
 											/>
 											<label
 												className="form-check-label"
-												for="form2Example3g"
+												htmlFor="checkLabel"
 											>
 												I agree all statements in{" "}
 												<a
