@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PWD_REGEX =
-	/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,24})$/;
+const PWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 function SignUp() {
 	// const userRef = userRef();
 	// const errRef = userRef();
@@ -145,10 +144,8 @@ function SignUp() {
 														: "offscreen"
 												}
 											>
-												4 to 24 characters. <br />
-												Must begin with a letter. <br />
-												Letters, numbers, underscores,
-												hyphens allowed
+												password regex. <br />
+												. <br />
 											</p>
 										</div>
 
