@@ -44,7 +44,6 @@ function Login() {
 			} else {
 				setErrMessage("Login failed");
 			}
-			errRef.current.focus();
 		}
 		console.log(email, password);
 	};
@@ -65,12 +64,6 @@ function Login() {
 							"url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp'",
 					}}
 				>
-					<p
-						ref={errRef}
-						className={errMessage ? "errmsg" : "offscreen"}
-					>
-						{errMessage}
-					</p>
 					<div className="mask d-flex align-items-center h-100 gradient-custom-3">
 						<div className="container h-100">
 							<div className="row d-flex justify-content-center align-items-center h-100">
@@ -80,6 +73,16 @@ function Login() {
 										style={{ borderRadius: "15px" }}
 									>
 										<div className="card-body p-5">
+											<p
+												ref={errRef}
+												className={
+													errMessage
+														? "errmsg"
+														: "offscreen"
+												}
+											>
+												{errMessage}
+											</p>
 											<h1>Sign In</h1>
 											<form onSubmit={handleSubmit}>
 												<div className="mb-3">
@@ -87,7 +90,7 @@ function Login() {
 														htmlFor="username"
 														className="form-label"
 													>
-														Username
+														Email
 													</label>
 													<input
 														type="text"
