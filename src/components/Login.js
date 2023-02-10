@@ -1,10 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import httpCommon from "../http-common";
+import AuthContext from "../context/AuthProvider";
+import "./style.css";
 
 const LOGIN_URL = "/authentication/login";
 function Login() {
-	// const { setAuth } = useContext(AuthContext);
+	const { setAuth } = useContext(AuthContext);
+	const userRef = useRef();
+	const errRef = useRef();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errMessage, setErrMessage] = useState(false);
@@ -13,9 +17,6 @@ function Login() {
 	useEffect(() => {
 		setErrMessage("");
 	}, [email, password]);
-
-	const userRef = useRef();
-	const errRef = useRef();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -26,11 +27,11 @@ function Login() {
 				JSON.stringify({ email, password })
 			);
 
-			console.log(JSON.stringify(response?.data));
-			// const accessToken = response?.data?.token;
+			console.log(JSON.stringify(response), "data");
+			const accessToken = response?.data?.token;
 			// const roles = response?.data?.roles;
 
-			// setAuth({ email, password, roles, accessToken });
+			setAuth({ email, password, accessToken });
 			setEmail("");
 			setPassword("");
 			setSuccess(true);
@@ -80,6 +81,7 @@ function Login() {
 														? "errmsg"
 														: "offscreen"
 												}
+												aria-live="assertive"
 											>
 												{errMessage}
 											</p>

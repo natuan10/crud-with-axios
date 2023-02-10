@@ -4,8 +4,9 @@ import {
 	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
 import httpCommon from "../http-common";
 import "./style.css";
 
@@ -17,6 +18,8 @@ const SIGNUP_URL = "/authentication/signup";
 function SignUp() {
 	// const userRef = userRef();
 	// const errRef = userRef();
+
+	const { setAuth } = useContext(AuthContext);
 
 	const [name, setName] = useState("");
 	const [validName, setValidName] = useState(false);
@@ -77,7 +80,8 @@ function SignUp() {
 				JSON.stringify({ name, email, password })
 			);
 			console.log(response.data, "response");
-
+			const roles = response?.data?.roles;
+			setAuth({ roles });
 			setSuccess(true);
 
 			// setName("");
@@ -101,7 +105,7 @@ function SignUp() {
 				<section>
 					<h1>success</h1>
 					<Link to={"/login"} className="nav-link">
-						Sign-up
+						Login
 					</Link>
 				</section>
 			) : (

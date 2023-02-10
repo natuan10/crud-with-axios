@@ -9,7 +9,8 @@ import SignUp from "./components/SignUp";
 
 function App() {
 	return (
-		<div>
+		<div className="App">
+			{/* <Login /> */}
 			{/* <nav className="navbar navbar-expand navbar-dark bg-dark">
 				<a href="/tutorials" className="navbar-brand">
 					CRUD
